@@ -1,6 +1,8 @@
 # Folders
 venv
 logs/
+models/
+artifact/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
