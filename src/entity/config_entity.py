@@ -55,3 +55,14 @@ class ModelTrainerConfig:
     _max_depth = MIN_SAMPLES_SPLIT_MAX_DEPTH
     _criterion = MIN_SAMPLES_SPLIT_CRITERION
     _random_state = MIN_SAMPLES_SPLIT_RANDOM_STATE
+    
+
+@dataclass
+class ModelEvaluationConfig:
+    changed_threshold_score: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
+    ggl_model_path: str = MODEL_FILE_NAME
+    
+    
+@dataclass
+class ModelPusherConfig:
+    ggl_model_path: str = MODEL_FILE_NAME
