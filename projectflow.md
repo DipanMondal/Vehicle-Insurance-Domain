@@ -59,5 +59,13 @@
 21. Now work on the "Data Transformation" component the way we did in above step. (add estimator.py to entity folder)
 22. Now work on the "Model Trainer" component the way we did in above step. (add class to estimator.py in entity folder)
 
+---
+
+## Model Pusher
+23. Set necessary parameters in constants
+24. Create a google service account and a folder in gdrive
+25. Copy the folder code and save as `GOOGLE_FOLDER_ID` in 'src/constants/__init__.py'
+26. Use the `GGLEstimator` in `src/entity/estimator.py` to push or retrieve the model from the cloud
+
 	
 	
