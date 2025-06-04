@@ -68,3 +68,9 @@ MODEL Evaluation related constants
 """
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
 
+
+"""
+Fast api settings
+"""
+APP_HOST = "0.0.0.0"
+APP_PORT = 5000

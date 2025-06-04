@@ -66,3 +66,7 @@ class ModelEvaluationConfig:
 @dataclass
 class ModelPusherConfig:
     ggl_model_path: str = MODEL_FILE_NAME
+    
+@dataclass
+class VehiclePredictorConfig:
+    ggl_model_path: str = MODEL_FILE_NAME

@@ -67,5 +67,9 @@
 25. Copy the folder code and save as `GOOGLE_FOLDER_ID` in 'src/constants/__init__.py'
 26. Use the `GGLEstimator` in `src/entity/estimator.py` to push or retrieve the model from the cloud
 
+## Prediction pipeline and Web interface
+27. Create the code structure of "Prediction Pipeline" and setup your app.py
+28. Add "static" and "template" dir to the project.
+
 	
 	
