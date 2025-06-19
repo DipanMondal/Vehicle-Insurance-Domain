@@ -1,75 +1,238 @@
 # Vehicle-Insurance-Domain
+
 ## Intro
-1. Create project template by executing `template.py` file
-2. Write the code on setup.py and pyproject.toml file to import local packages
-3. Create a virtual env, activate it and install the requirements from requirements.txt
-#### Commands(For Windows)
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   //add required modules to requirements.txt
-   "pip install -r requirements.txt"
-   ```
-4. Do a "pip list" on terminal to make sure you have local packages installed.
+This project, "Vehicle-Insurance-Domain," is an MLOps (Machine Learning Operations) project focused on predicting vehicle insurance responses. It sets up an end-to-end machine learning pipeline, from data ingestion to model deployment, using a modular and robust architecture.
 
----
+### Project Overview
 
-## MongoDB Setup
-5. Sign up to MongoDB Atlas and create a new project by just providing it a name then next next create.
-6. From "Create a cluster" screen, hit "create", Select M0 service keeping other services as default, hit "create deployment"
-7. Setup the username and password and then create DB user.
-8. Go to "network access" and add ip address - "0.0.0.0/0" so that we can access it from anywhere
-9. Go back to project >> "Get Connection String" >> "Drivers" >> {Driver:Python, Version:3.6 or later} 
-   >> copy and save the connection string with you(replace password). >> Done.
-10. Create folder "notebook" >> do step 11 >>  create file "mongoDB_demo.ipynb" >> select kernal>python kernal>vehicle>>
-11. Dataset added to notebook folder
-12. Push your data to mongoDB database from your python notebook.
-13. Go to mongoDB Atlas >> Database >> browse collection >> see your data in key value format
+The project aims to build and deploy a machine learning model that predicts whether a customer is interested in vehicle insurance. It incorporates:
 
----
+* **Data Ingestion:** Fetching data from a MongoDB database.
+* **Data Validation:** Ensuring data quality and consistency using a schema.
+* **Data Transformation:** Preprocessing data, handling categorical features, and scaling numerical features. It also addresses class imbalance using SMOTEENN.
+* **Model Training:** Training a RandomForestClassifier model and optimizing its hyperparameters.
+* **Model Evaluation:** Comparing the trained model's performance with a production model (if available) to determine if it should be pushed to production.
+* **Model Pusher:** Deploying the accepted model to Google Drive for cloud storage.
+* **Prediction Pipeline & Web Interface:** Providing a FastAPI-based web application for real-time predictions.
 
-## logging, exception and notebooks
-14. Write the logger file and test it on demo.py
-15. Write the exception file and test it on demo.py
-16. EDA and Feature Engg notebook added.
+### Setup and Installation
 
----
+1.  **Clone the Repository:**
+    ```bash
+    git clone <repository_url>
+    cd Vehicle-Insurance-Domain
+    ```
+2.  **Create a Virtual Environment:**
+    ```bash
+    python -m venv venv
+    ```
+3.  **Activate the Virtual Environment:**
+    * Windows: `venv\Scripts\activate`
+    * macOS/Linux: `source venv/bin/activate`
+4.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+5.  **MongoDB Setup:**
+    * Sign up for [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+    * Create a new project and a free cluster (M0 service).
+    * Set up a database user with a username and password.
+    * Configure "Network Access" to allow connections from `0.0.0.0/0` (for development purposes; restrict in production).
+    * Obtain your MongoDB connection string (replace `<username>` and `<db_password>` with your credentials).
+    * Create a `.env` file in the root directory of the project and set the following environment variables:
+        ```
+        MONGO_USER=<your_mongodb_username>
+        MONGO_PASSWORD=<your_mongodb_password>
+        MONGO_URI=<your_mongodb_connection_string>
+        ```
+    * You can push the initial dataset to MongoDB using the `MongoDB_testing.ipynb` notebook located in the `notebook` folder.
 
-## Data Ingestion
-17. Before we work on "Data Ingestion" component >> Declare variables within constants.__init__.py file >> 
-    add code to configuration.mongo_db_connections.py file and define the func for mondodb connection >> 
-    Inside "data_access" folder, add code to vehicle_data.py that will use mongo_db_connections.py
-    to connect with DB, fetch data in key-val format and transform that to df >>
-    add code to entity.config_entity.py file for DataIngestionConfig class >>
-    add code to entity.artifact_entity.py file for DataIngestionArtifact class >>
-    add code to components.data_ingestion.py file >> add code to training pipeline >> 
-    run demo.py (set mongodb connection url first, see next step)
-18. To setup the connection url on mac(also work for windows):
-	- create a `.env` file in root directory
-	- set `MONGO_USER`,`MONGO_PASSWORD`,`MONGO_URI` where
-		- `MONGO_USER` : Username
-		- `MONGO_PASSWORD` : Database password
-		- `MONGO_URI` : Connection string from mongoDB
-		
----
+6.  **Google Drive Setup (for Model Pusher):**
+    * Create a Google Cloud Platform project.
+    * Enable the Google Drive API.
+    * Create a service account and generate a JSON key file.
+    * Save this JSON key file as `cred/key.json` in your project's root directory.
+    * Create a specific folder in your Google Drive for model storage.
+    * Copy the ID of this Google Drive folder and update `GOOGLE_FOLDER_ID` in `src/constants/__init__.py`.
 
-## Data Validation, Data Transformation & Model Trainer
-19. Complete the work on utils.main_utils.py and config.schema.yaml file (add entire info about dataset for data validation step)
-20. Now work on the "Data Validation" component the way we did in step 17 for Data Ingestion. (Workflow mentioned below)
-21. Now work on the "Data Transformation" component the way we did in above step. (add estimator.py to entity folder)
-22. Now work on the "Model Trainer" component the way we did in above step. (add class to estimator.py in entity folder)
+### How to Run
 
----
+#### 1. Train the Model
 
-## Model Pusher
-23. Set necessary parameters in constants
-24. Create a google service account and a folder in gdrive
-25. Copy the folder code and save as `GOOGLE_FOLDER_ID` in 'src/constants/__init__.py'
-26. Use the `GGLEstimator` in `src/entity/estimator.py` to push or retrieve the model from the cloud
+To run the entire training pipeline (data ingestion, validation, transformation, model training, evaluation, and pushing to cloud):
 
-## Prediction pipeline and Web interface
-27. Create the code structure of "Prediction Pipeline" and setup your app.py
-28. Add "static" and "template" dir to the project.
+```bash
+python demo.py
+```
+This project, "Vehicle-Insurance-Domain," is an MLOps (Machine Learning Operations) project focused on predicting vehicle insurance responses. It sets up an end-to-end machine learning pipeline, from data ingestion to model deployment, using a modular and robust architecture.
 
-	
-	
+Project Overview
+The project aims to build and deploy a machine learning model that predicts whether a customer is interested in vehicle insurance. It incorporates:
+
+Data Ingestion: Fetching data from a MongoDB database.
+Data Validation: Ensuring data quality and consistency using a schema.
+Data Transformation: Preprocessing data, handling categorical features, and scaling numerical features. It also addresses class imbalance using SMOTEENN.
+Model Training: Training a RandomForestClassifier model and optimizing its hyperparameters.
+Model Evaluation: Comparing the trained model's performance with a production model (if available) to determine if it should be pushed to production.
+Model Pusher: Deploying the accepted model to Google Drive for cloud storage.
+Prediction Pipeline & Web Interface: Providing a FastAPI-based web application for real-time predictions.
+Setup and Installation
+Clone the Repository:
+
+Bash
+
+git clone <repository_url>
+cd Vehicle-Insurance-Domain
+Create a Virtual Environment:
+
+Bash
+
+python -m venv venv
+Activate the Virtual Environment:
+
+Windows: venv\Scripts\activate
+macOS/Linux: source venv/bin/activate
+Install Dependencies:
+
+Bash
+
+pip install -r requirements.txt
+MongoDB Setup:
+
+Sign up for MongoDB Atlas.
+Create a new project and a free cluster (M0 service).
+Set up a database user with a username and password.
+Configure "Network Access" to allow connections from 0.0.0.0/0 (for development purposes; restrict in production).
+Obtain your MongoDB connection string (replace <username> and <db_password> with your credentials).
+Create a .env file in the root directory of the project and set the following environment variables:
+MONGO_USER=<your_mongodb_username>
+MONGO_PASSWORD=<your_mongodb_password>
+MONGO_URI=<your_mongodb_connection_string>
+You can push the initial dataset to MongoDB using the MongoDB_testing.ipynb notebook located in the notebook folder.
+Google Drive Setup (for Model Pusher):
+
+Create a Google Cloud Platform project.
+Enable the Google Drive API.
+Create a service account and generate a JSON key file.
+Save this JSON key file as cred/key.json in your project's root directory.
+Create a specific folder in your Google Drive for model storage.
+Copy the ID of this Google Drive folder and update GOOGLE_FOLDER_ID in src/constants/__init__.py.
+How to Run
+1. Train the Model
+To run the entire training pipeline (data ingestion, validation, transformation, model training, evaluation, and pushing to cloud):
+
+Bash
+
+python demo.py
+Alternatively, you can trigger the training via the web interface by navigating to /train after starting the FastAPI app.
+
+2. Run the Web Application
+To start the FastAPI application for predictions:
+
+Bash
+
+uvicorn app:app --host 0.0.0.0 --port 5000
+Once the server is running, open your web browser and go to http://0.0.0.0:5000 (or the configured APP_HOST and APP_PORT). You will see a form to input vehicle data and get a prediction.
+
+Project Structure (Brief)
+The project follows a standard MLOps lifecycle, with components organized for clarity and modularity:
+
+src/: Contains the core source code.
+components/: Individual stages of the ML pipeline (data ingestion, transformation, model trainer, etc.).
+configuration/: MongoDB connection setup.
+cloud_storage/: Google Drive integration for model storage.
+data_access/: Handlers for fetching data from MongoDB.
+constants/: Centralized configuration variables.
+entity/: Data class definitions for configurations and artifacts.
+exception/: Custom exception handling.
+logger/: Logging configuration.
+pipeline/: Orchestrates the training and prediction workflows.
+utils/: Utility functions (reading YAML, saving/loading objects).
+notebook/: Jupyter notebooks for EDA, testing MongoDB, etc.
+config/: YAML files for schema and model configurations.
+templates/: HTML templates for the web interface.
+static/: Static files (CSS).
+app.py: FastAPI application entry point.
+demo.py: Script to run the training pipeline.
+requirements.txt: Project dependencies.
+setup.py, pyproject.toml: Python package metadata.
+.env: Environment variables (not committed to Git).
+Raw README.md Code
+Markdown
+
+# Vehicle-Insurance-Domain
+
+## Intro
+This project, "Vehicle-Insurance-Domain," is an MLOps (Machine Learning Operations) project focused on predicting vehicle insurance responses. It sets up an end-to-end machine learning pipeline, from data ingestion to model deployment, using a modular and robust architecture.
+
+### Project Overview
+
+The project aims to build and deploy a machine learning model that predicts whether a customer is interested in vehicle insurance. It incorporates:
+
+* **Data Ingestion:** Fetching data from a MongoDB database.
+* **Data Validation:** Ensuring data quality and consistency using a schema.
+* **Data Transformation:** Preprocessing data, handling categorical features, and scaling numerical features. It also addresses class imbalance using SMOTEENN.
+* **Model Training:** Training a RandomForestClassifier model and optimizing its hyperparameters.
+* **Model Evaluation:** Comparing the trained model's performance with a production model (if available) to determine if it should be pushed to production.
+* **Model Pusher:** Deploying the accepted model to Google Drive for cloud storage.
+* **Prediction Pipeline & Web Interface:** Providing a FastAPI-based web application for real-time predictions.
+
+### Setup and Installation
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone <repository_url>
+    cd Vehicle-Insurance-Domain
+    ```
+2.  **Create a Virtual Environment:**
+    ```bash
+    python -m venv venv
+    ```
+3.  **Activate the Virtual Environment:**
+    * Windows: `venv\Scripts\activate`
+    * macOS/Linux: `source venv/bin/activate`
+4.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+5.  **MongoDB Setup:**
+    * Sign up for [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+    * Create a new project and a free cluster (M0 service).
+    * Set up a database user with a username and password.
+    * Configure "Network Access" to allow connections from `0.0.0.0/0` (for development purposes; restrict in production).
+    * Obtain your MongoDB connection string (replace `<username>` and `<db_password>` with your credentials).
+    * Create a `.env` file in the root directory of the project and set the following environment variables:
+        ```
+        MONGO_USER=<your_mongodb_username>
+        MONGO_PASSWORD=<your_mongodb_password>
+        MONGO_URI=<your_mongodb_connection_string>
+        ```
+    * You can push the initial dataset to MongoDB using the `MongoDB_testing.ipynb` notebook located in the `notebook` folder.
+
+6.  **Google Drive Setup (for Model Pusher):**
+    * Create a Google Cloud Platform project.
+    * Enable the Google Drive API.
+    * Create a service account and generate a JSON key file.
+    * Save this JSON key file as `cred/key.json` in your project's root directory.
+    * Create a specific folder in your Google Drive for model storage.
+    * Copy the ID of this Google Drive folder and update `GOOGLE_FOLDER_ID` in `src/constants/__init__.py`.
+
+### How to Run
+
+#### 1. Train the Model
+
+To run the entire training pipeline (data ingestion, validation, transformation, model training, evaluation, and pushing to cloud):
+
+```bash
+python demo.py
+```
+
+Alternatively, you can trigger the training via the web interface by navigating to /train after starting the FastAPI app.
+
+2. Run the Web Application
+To start the FastAPI application for predictions:
+
+```bash
+uvicorn app:app --host 0.0.0.0 --port 5000
+```
+Once the server is running, open your web browser and go to `http://0.0.0.0:5000` (or the configured APP_HOST and APP_PORT). You will see a form to input vehicle data and get a prediction.
